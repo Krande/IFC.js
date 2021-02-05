@@ -14,7 +14,7 @@ function enablePicking(mainObject){
   importedIFC = mainObject 
 }
 
-function pick(camera) {
+function pick(camera, controls) {
   if (canUserPick && importedIFC.children) {
     if (pickedObject) {
       pickedObject.material = pickedObjectSavedMaterial;
@@ -28,9 +28,21 @@ function pick(camera) {
       pickedObjectSavedMaterial = pickedObject.material;
       pickedObject.material = pickedObjectMaterial;
       console.log(pickedObject._Data);
+
+      controls.target = getCenterPoint(pickedObject);
     }
   }
   canUserPick = false;
+}
+
+// Proposed function as is
+function getCenterPoint(mesh) {
+  var geometry = mesh.geometry;
+  geometry.computeBoundingBox();
+  var center = new THREE.Vector3();
+  geometry.boundingBox.getCenter( center );
+  mesh.localToWorld( center );
+  return center;
 }
 
 function getCanvasRelativePosition(event) {

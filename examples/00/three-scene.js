@@ -78,7 +78,7 @@ var animate = function () {
   requestAnimationFrame(animate);
   controls.update();
   resizeRendererToDisplaySize(renderer);
-  pick(camera);
+  pick(camera, controls);
   renderer.render(scene, camera);
 };
 
